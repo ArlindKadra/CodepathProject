@@ -32,7 +32,8 @@
         android:layout_alignRight="@+id/etEditItem"
         android:layout_alignEnd="@+id/etEditItem"
         android:id="@+id/tvInfo"
-        android:text="@string/edit_info"/>
+        android:text="@string/edit_info"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"/>
 
     <Button
         android:text="Save"

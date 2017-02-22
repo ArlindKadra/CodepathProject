@@ -10,11 +10,18 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/*
+MainActivity is the entry activity. It shows a list with notes. On a long click at a note the user can remove it.
+On a short click the user can edit an existing node. This is done by calling EditItemActivity and passing the note text and position.
+If the user wants to add a new note he can fill the EditText field and save the new note.
+ */
 public class MainActivity extends AppCompatActivity
 {
     ArrayList<String> items;
@@ -55,11 +62,13 @@ public class MainActivity extends AppCompatActivity
             String text = data.getExtras().getString("noteText");
             int position = data.getExtras().getInt("notePosition");
             updateNote(text, position);
+            // show a notification to the user that the action was successful
+            Toast.makeText(MainActivity.this, "Edit successful", Toast.LENGTH_SHORT).show();
 
 
         }
     }
-
+    // used to update a note after it is edited
     private void updateNote(String text, int position)
     {
         if(position != -1)
@@ -72,11 +81,11 @@ public class MainActivity extends AppCompatActivity
         }
         else
         {
-            Log.e(TAG,"Something messed up in the listview or while putting the arguments on the intent");
+            Log.e(TAG,"Something messed up in the ListView or while putting the arguments on the intent");
         }
 
     }
-
+    // set the long and short click listener for the ListView
     private void setupListViewListener()
     {
         lvItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
@@ -105,7 +114,7 @@ public class MainActivity extends AppCompatActivity
 
         });
     }
-
+    // get the notes from our text file
     private void readItems()
     {
         File filesDir = getFilesDir();
@@ -121,7 +130,7 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
-
+    // launch the form to edit the note and pass the note body and position
     private void launchEditForm(String text, int position)
     {
         Intent intent = new Intent(MainActivity.this, EditItemActivity.class);
@@ -129,7 +138,7 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra("notePosition", position);
         startActivityForResult(intent, REQUEST_CODE);
     }
-
+    // write the notes to our text file, so that the data can persist after closing the app.
     private void writeItems()
     {
         File filesDir = getFilesDir();
@@ -144,7 +153,7 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
-
+    // add a note to our note list and write the list to storage.
     private void onAddItem()
     {
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);

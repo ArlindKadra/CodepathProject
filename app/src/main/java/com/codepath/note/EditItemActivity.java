@@ -7,13 +7,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-
+/*
+EditItemActivity is the activity that we use to edit a note. This is called by the MainActivity by a short click from the user on a note.
+This activity, after the user enters a new text for the note, sends the results back to MainActivity, which handles the results.
+ */
 public class EditItemActivity extends AppCompatActivity
 {
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_item);
         // get the intent, so we can access the data
@@ -37,7 +41,7 @@ public class EditItemActivity extends AppCompatActivity
             }
         });
     }
-
+    // Return the note position and the new text to the calling activity so we can update the note with the new text.
     private void returnResults(String text, int position)
     {
         Intent result = new Intent();
@@ -46,7 +50,7 @@ public class EditItemActivity extends AppCompatActivity
         setResult(RESULT_OK, result);
         this.finish();
     }
-
+    // set up the form with the note text, position the cursor and make it request focus.
     private void setupForm(String text)
     {
         EditText etEditItem = (EditText) findViewById(R.id.etEditItem);
@@ -55,7 +59,7 @@ public class EditItemActivity extends AppCompatActivity
         etEditItem.setSelection(cursorPosition);
         etEditItem.requestFocus();
     }
-
+    // check if we have input to our EditText field
     private boolean validateNoteText()
     {
         EditText etEditItem = (EditText) findViewById(R.id.etEditItem);
@@ -69,7 +73,7 @@ public class EditItemActivity extends AppCompatActivity
             return false;
         }
     }
-
+    // get the text from the EditText field, only called if the validation succeeds.
     private String getNoteText()
     {
         EditText etEditItem = (EditText) findViewById(R.id.etEditItem);
